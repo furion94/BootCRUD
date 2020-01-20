@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="lgr.boot.bootreact.model.BoardDaoMybatis">
+
+    <!--글 입력-->
+    <insert id="insertBoard" parameterType="BVO">
+        INSERT INTO TESTBOARD (WRITER, TITLE, CONTENT) VALUES (#{writer}, #{title}, #{content})
+    </insert>
+
+    <delete id="deleteBoard" parameterType="String">
+        DELETE FROM TESTBOARD WHERE BOARD_NUMBER = #{board_number}
+    </delete>
+
+    <update id="updateBoard" parameterType="BVO">
+        UPDATE TESTBOARD SET TITLE = #{title}, CONTENT = #{content} WHERE BOARD_NUMBER = #{board_number}
+    </update>
+
+</mapper>
