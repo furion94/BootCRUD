@@ -7,13 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -33,7 +31,7 @@ public class controller {
     @ResponseBody
     @GetMapping("/list")
     public Map<String, List<BoardVO>> testing(HttpServletRequest request){
-        System.out.println("하이");
+        System.out.println("전체조회");
         List<BoardVO> list = jpa.findAll();
         Map<String, List<BoardVO>> map = new HashMap<String, List<BoardVO>>();
         map.put("boardList", list);
@@ -42,32 +40,37 @@ public class controller {
 
     @ResponseBody
     @GetMapping("/select")
-    public String selectOne(HttpServletRequest request){
-        Map<String, Optional<BoardVO>> map = new HashMap<String, Optional<BoardVO>>();
-        map.put("boardList", jpa.findById(Integer.parseInt(request.getParameter("num"))));
-        System.out.println(map.toString());
-        return map.toString();
+    public Map<String, List<BoardVO>> selectOne(HttpServletRequest request){
+        System.out.println("상세조회");
+        Map<String, List<BoardVO>> map = new HashMap<String, List<BoardVO>>();
+        List<BoardVO> lists = new ArrayList<>();
+        lists.add(jpa.findById(Integer.parseInt(request.getParameter("num"))).get());
+        map.put("boardList", lists);
+        return map;
     }
 
     @ResponseBody
     @GetMapping("/delete")
     public String deleteOne(HttpServletRequest request){
-        System.out.println("delete");
+        System.out.println("글삭제");
         Integer i = mybatis.deleteBoard(request.getParameter("num"));
         return i>0?"success":"false";
     }
 
-    @GetMapping("/insert")
+    @ResponseBody
+    @PostMapping("/insert")
     public String insertBoard(HttpServletRequest request, BoardVO bvo){
-        mybatis.insertBoard(bvo);
-        return "redirect:";
+        System.out.println("글작성");
+        Integer i = mybatis.insertBoard(bvo);
+        return i>0?"success":"false";
     }
 
-    @GetMapping("/update")
+    @ResponseBody
+    @PostMapping("/update")
     public String updateBoard(HttpServletRequest request, BoardVO bvo){
-        mybatis.updateBoard(bvo);
-        request.setAttribute("seq", bvo.getBoard_number());
-        request.setAttribute("pName", "select");
-        return "main";
+        System.out.println("글수정");
+        Integer i = mybatis.updateBoard(bvo);
+        System.out.println(bvo.toString());
+        return i>0?"success":"false";
     }
 }
