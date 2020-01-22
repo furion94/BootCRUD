@@ -12,6 +12,7 @@
     <title>Hello Testing Boot</title>
 </head>
 <body>
-    ${lists}
+<div id="root"></div>
+<script src="/js/react/${pName}.bundle.js"></script>
 </body>
 </html>
