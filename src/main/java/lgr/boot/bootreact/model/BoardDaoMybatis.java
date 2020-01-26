@@ -9,5 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface BoardDaoMybatis extends Repository {
     public Integer insertBoard(BoardVO bvo);
     public Integer deleteBoard(String board_number);
-    public Integer updateBoard(BoardVO bvo);
+    public Integer updateBoard(String board_number,String content);
 }
+
+

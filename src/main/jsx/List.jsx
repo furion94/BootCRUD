@@ -24,16 +24,15 @@ class List extends React.Component {
 
     reloadList(){
         base.listBoard().then(res => {
-            this.setState({board: res.data.boardList});
+            this.setState({board: res.data});
             this.setState({now: 'list'});
         });
-        console.log(this.state.now);
     }
 
     detailBoard(board_number){
         this.setState({now: 'detail'});
         base.detailBoard(board_number).then(res => {
-            this.setState({detailBoard: res.data.boardList});
+            this.setState({detailBoard: res.data});
         });
     }
 
@@ -122,34 +121,30 @@ class List extends React.Component {
             return(
                 <div>
                     상세조회
-                    {
-                        this.state.detailBoard.map(list =>
                             <table>
                                 <tr>
                                     <th>글번호</th>
-                                    <td>{list.board_number}</td>
+                                    <td>{this.state.detailBoard.board_number}</td>
                                 </tr>
                                 <tr>
                                     <th>제목</th>
-                                    <td><input type='text' id='title' value={list.title}/></td>
+                                    <td><input type='text' id='title' value={this.state.detailBoard.title}/></td>
                                 </tr>
                                 <tr>
                                     <th>작성자</th>
-                                    <td>{list.writer}</td>
+                                    <td>{this.state.detailBoard.writer}</td>
                                 </tr>
                                 <tr>
                                     <th>내용</th>
-                                    <td><textarea id='content'>{list.content}</textarea></td>
+                                    <td><textarea id='content'>{this.state.detailBoard.content}</textarea></td>
                                 </tr>
                                 <tr>
                                     <td colSpan='2'>
-                                        <button className="btn btn-success" onClick={() => this.updateBoard(list.board_number)}>수정</button>
+                                        <button className="btn btn-success" onClick={() => this.updateBoard(this.state.detailBoard.board_number)}>수정</button>
                                         <button className="btn btn-success" onClick={() => this.reloadList()}>돌아가기</button>
                                     </td>
                                 </tr>
                             </table>
-                        )
-                    }
                 </div>
             );
         }

@@ -8,26 +8,25 @@ class base {
     }
 
     detailBoard(board_number){
-        return axios.get(BASE_URL + '/select?num=' + board_number);
+        return axios.get(BASE_URL + '/select/' + board_number);
     }
 
     deleteBoard(board_number){
-        return axios.get(BASE_URL + '/delete?num=' + board_number);
+        return axios.get(BASE_URL + '/delete/' + board_number);
     }
 
     insertBoard(){
         const writer = document.getElementById('writer').value;
         const title = document.getElementById('title').value;
         const content = document.getElementById('content').value;
-        console.log(content);
         return axios.post(BASE_URL + '/insert?writer='+writer+'&title='+title+'&content='+content);
     }
 
     updateBoard(board_number){
-        const title = document.getElementById('title').value;
         const content = document.getElementById('content').value;
-        return axios.post(BASE_URL + '/update?title='+title+'&content='+content+'&board_number='+board_number);
+        return axios.post(BASE_URL + '/update/'+board_number+'/'+content);
     }
 }
 
 export default new base();
+
