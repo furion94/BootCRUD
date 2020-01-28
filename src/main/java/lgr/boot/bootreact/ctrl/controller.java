@@ -48,7 +48,7 @@ public class controller {
     }
 
     @ResponseBody
-    @PostMapping("/insert")
+    @PostMapping("/insert/{writer}/{title}/{content}")
     public String insertBoard(BoardVO bvo){
         System.out.println("글작성");
         Integer i = mybatis.insertBoard(bvo);
@@ -56,11 +56,11 @@ public class controller {
     }
 
     @ResponseBody
-    @PostMapping("/update/{board_number}/{content}")
-    public String updateBoard(@PathVariable(value = "content") String content, @PathVariable(value = "board_number") String board_number){
+    @PostMapping("/update/{board_number}/{title}/{content}")
+    public String updateBoard(BoardVO bvo){
         System.out.println("글수정");
-        Integer i = mybatis.updateBoard(board_number, content);
-        System.out.println(board_number+": "+ content);
+        Integer i = mybatis.updateBoard(bvo);
         return i>0?"success":"false";
     }
+
 }

@@ -25,7 +25,7 @@ public class BoardServiceImpl implements IBoardService{
     }
 
     @Override
-    public Integer updateBoard(String board_number, String content) {
-        return dao.updateBoard(board_number, content);
+    public Integer updateBoard(BoardVO bvo) {
+        return dao.updateBoard(bvo);
     }
 }

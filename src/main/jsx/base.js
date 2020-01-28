@@ -19,12 +19,13 @@ class base {
         const writer = document.getElementById('writer').value;
         const title = document.getElementById('title').value;
         const content = document.getElementById('content').value;
-        return axios.post(BASE_URL + '/insert?writer='+writer+'&title='+title+'&content='+content);
+        return axios.post(BASE_URL + '/insert/'+writer+'/'+title+'/'+content);
     }
 
     updateBoard(board_number){
+        const title = document.getElementById('title').value;
         const content = document.getElementById('content').value;
-        return axios.post(BASE_URL + '/update/'+board_number+'/'+content);
+        return axios.post(BASE_URL + '/update/'+board_number+'/'+title+'/'+content);
     }
 }
 

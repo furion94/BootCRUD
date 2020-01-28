@@ -10,49 +10,56 @@ class List extends React.Component {
             detailBoard: [],
             now: 'list'
         }
-        this.reloadList = this.reloadList.bind(this);
-        this.detailBoard = this.detailBoard.bind(this);
-        this.deleteBoard = this.deleteBoard.bind(this);
-        this.insertBoardForm = this.insertBoardForm.bind(this);
-        this.insertBoard = this.insertBoard.bind(this);
-        this.updateBoard = this.updateBoard.bind(this);
     }
 
     componentDidMount() {
         this.reloadList();
     }
 
-    reloadList(){
+    reloadList = () => {
+        this.clearValue();
         base.listBoard().then(res => {
             this.setState({board: res.data});
             this.setState({now: 'list'});
         });
     }
 
-    detailBoard(board_number){
+    detailBoard = (board_number) => {
         this.setState({now: 'detail'});
         base.detailBoard(board_number).then(res => {
             this.setState({detailBoard: res.data});
         });
     }
 
-    deleteBoard(board_number){
+    deleteBoard = (board_number) => {
         base.deleteBoard(board_number);
         this.reloadList();
     }
 
-    insertBoardForm(){
+    insertBoardForm = () =>{
         this.setState({now: 'insert'})
     }
 
-    insertBoard(){
+    insertBoard = () => {
         base.insertBoard();
         this.reloadList();
     }
 
-    updateBoard(board_number){
+    updateBoard = (board_number) => {
         base.updateBoard(board_number);
         this.reloadList();
+    }
+
+    onChangeValue = (e) => {
+        let changeValue = this.state.detailBoard;
+        changeValue[e.target.name] = e.target.value;
+        this.setState({changeValue});
+    }
+
+    clearValue = () => {
+        this.setState({board: []});
+        this.setState({detailBoard: []});
+        this.setState({now: null});
     }
 
     render() {
@@ -69,8 +76,8 @@ class List extends React.Component {
                         </thead>
                         <tbody>
                         {
-                            this.state.board.map(list =>
-                                <tr>
+                            this.state.board.map((list, index) =>
+                                <tr key={index}>
                                     <td>{list.board_number}</td>
                                     <td onClick={() => this.detailBoard(list.board_number)}>{list.title}</td>
                                     <td>{list.writer}</td>
@@ -88,30 +95,32 @@ class List extends React.Component {
             return(
                 <div>
                     <table>
-                        <tr>
-                            <th>
-                                작성자
-                            </th>
-                            <td>
-                                <input type='text' id='writer'/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                제목
-                            </th>
-                            <td>
-                                <input type='text' id='title'/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                내용
-                            </th>
-                            <td>
-                                <textarea id='content'></textarea>
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <th>
+                                    작성자
+                                </th>
+                                <td>
+                                    <input type='text' id='writer'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    제목
+                                </th>
+                                <td>
+                                    <input type='text' id='title'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    내용
+                                </th>
+                                <td>
+                                    <textarea id='content'></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                     <button className="btn btn-success" onClick={() => this.insertBoard()}>작성완료</button>
                     <button className="btn btn-success" onClick={() => this.reloadList()}>돌아가기</button>
@@ -121,31 +130,39 @@ class List extends React.Component {
             return(
                 <div>
                     상세조회
-                            <table>
-                                <tr>
-                                    <th>글번호</th>
-                                    <td>{this.state.detailBoard.board_number}</td>
-                                </tr>
-                                <tr>
-                                    <th>제목</th>
-                                    <td><input type='text' id='title' value={this.state.detailBoard.title}/></td>
-                                </tr>
-                                <tr>
-                                    <th>작성자</th>
-                                    <td>{this.state.detailBoard.writer}</td>
-                                </tr>
-                                <tr>
-                                    <th>내용</th>
-                                    <td><textarea id='content'>{this.state.detailBoard.content}</textarea></td>
-                                </tr>
-                                <tr>
-                                    <td colSpan='2'>
-                                        <button className="btn btn-success" onClick={() => this.updateBoard(this.state.detailBoard.board_number)}>수정</button>
-                                        <button className="btn btn-success" onClick={() => this.reloadList()}>돌아가기</button>
-                                    </td>
-                                </tr>
-                            </table>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>글번호</th>
+                                <td>{this.state.detailBoard.board_number}</td>
+                            </tr>
+                            <tr>
+                                <th>제목</th>
+                                <td><input type='text' id='title' name="title" onChange={this.onChangeValue} value={this.state.detailBoard.title||''}/></td>
+                            </tr>
+                            <tr>
+                                <th>작성자</th>
+                                <td>{this.state.detailBoard.writer}</td>
+                            </tr>
+                            <tr>
+                                <th>내용</th>
+                                <td><textarea id='content' name='content' value={this.state.detailBoard.content||''} onChange={this.onChangeValue}></textarea></td>
+                            </tr>
+                            <tr>
+                                <td colSpan='2'>
+                                    <button className="btn btn-success" onClick={() => this.updateBoard(this.state.detailBoard.board_number)}>수정</button>
+                                    <button className="btn btn-success" onClick={() => this.reloadList()}>돌아가기</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+            );
+        }else{
+            return(
+                <div>
+                화면로딩중
+               </div>
             );
         }
     }
