@@ -66,12 +66,14 @@ class List extends React.Component {
         if(this.state.now == 'list'){
             return (
                 <div>
+                    <h1>게시글 목록</h1>
                     <table>
                         <thead>
                         <tr>
                             <th>글 번호</th>
-                            <th>제목</th>
-                            <th>글쓴이</th>
+                            <th width='200px'>제목</th>
+                            <th width='50px'>글쓴이</th>
+                            <th>삭제</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -86,18 +88,23 @@ class List extends React.Component {
                                     </td>
                                 </tr>)
                         }
+                        <tr>
+                            <td colSpan='4'>
+                                <button className="btn btn-success" onClick={() => this.insertBoardForm()}>글쓰기</button>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
-                    <button className="btn btn-success" onClick={() => this.insertBoardForm()}>글쓰기</button>
                 </div>
             );
         }else if(this.state.now == 'insert'){
             return(
                 <div>
+                    <h1>글작성</h1>
                     <table>
                         <tbody>
                             <tr>
-                                <th>
+                                <th width='100px'>
                                     작성자
                                 </th>
                                 <td>
@@ -117,23 +124,27 @@ class List extends React.Component {
                                     내용
                                 </th>
                                 <td>
-                                    <textarea id='content'></textarea>
+                                    <textarea id='content' rows='5'></textarea>
                                 </td>
+                            </tr>
+                            <tr>
+                                <th colSpan='2'>
+                                    <button className="btn btn-success" onClick={() => this.insertBoard()}>작성완료</button>　
+                                    <button className="btn btn-success" onClick={() => this.reloadList()}>돌아가기</button>
+                                </th>
                             </tr>
                         </tbody>
                     </table>
-                    <button className="btn btn-success" onClick={() => this.insertBoard()}>작성완료</button>
-                    <button className="btn btn-success" onClick={() => this.reloadList()}>돌아가기</button>
                 </div>
             );
         }else if(this.state.now == 'detail'){
             return(
                 <div>
-                    상세조회
+                    <h1>상세조회</h1>
                     <table>
                         <tbody>
                             <tr>
-                                <th>글번호</th>
+                                <th width='100px'>글번호</th>
                                 <td>{this.state.detailBoard.board_number}</td>
                             </tr>
                             <tr>
@@ -146,11 +157,11 @@ class List extends React.Component {
                             </tr>
                             <tr>
                                 <th>내용</th>
-                                <td><textarea id='content' name='content' value={this.state.detailBoard.content||''} onChange={this.onChangeValue}></textarea></td>
+                                <td><textarea rows='5' id='content' name='content' value={this.state.detailBoard.content||''} onChange={this.onChangeValue}></textarea></td>
                             </tr>
                             <tr>
                                 <td colSpan='2'>
-                                    <button className="btn btn-success" onClick={() => this.updateBoard(this.state.detailBoard.board_number)}>수정</button>
+                                    <button className="btn btn-success" onClick={() => this.updateBoard(this.state.detailBoard.board_number)}>수정</button>　
                                     <button className="btn btn-success" onClick={() => this.reloadList()}>돌아가기</button>
                                 </td>
                             </tr>
@@ -158,7 +169,7 @@ class List extends React.Component {
                     </table>
                 </div>
             );
-        }else{
+        }else {
             return(
                 <div>
                 화면로딩중

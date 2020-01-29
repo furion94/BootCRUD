@@ -12,6 +12,12 @@
     <title>Hello Testing Boot</title>
 </head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<style>
+    table,tr,td,th,thead,tbody{
+        border: 1px black solid;
+        text-align: center;
+    }
+</style>
 <body>
 <div id="root"></div>
 <script src="/js/react/${pName}.bundle.js"></script>
