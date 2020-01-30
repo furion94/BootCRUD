@@ -20,46 +20,46 @@ public class controller {
     private BoardDaoJPA jpa;
     @Autowired
     private IBoardService mybatis;
-    @Autowired
-    private TestingBean tb;
+//    @Autowired
+//    private TestingBean tb;
 
     @GetMapping("/")
     public String welcome(HttpServletRequest request){
         request.setAttribute("pName", "List");
-        tb.testtt(); // properties 읽어온 Bean 테스트 코드
+//        tb.testtt(); // properties 읽어온 Bean 테스트 코드
         return "main";
     }
 
     @ResponseBody
-    @GetMapping("/list")
-    public List<BoardVO> listAll(HttpServletRequest request){
+    @GetMapping("/board")
+    public List<BoardVO> listAll(){
         log.info("전체조회");
         return jpa.findAll();
     }
 
     @ResponseBody
-    @GetMapping("/select/{num}")
+    @GetMapping("/board/{num}")
     public BoardVO selectOne(@PathVariable(value = "num") Integer num){
         log.info("상세조회");
         return jpa.findById(num).get();
     }
 
     @ResponseBody
-    @GetMapping("/delete/{num}")
+    @DeleteMapping("/board/{num}")
     public String deleteOne(@PathVariable(value = "num") String num){
         log.info("글 삭제 : {}", num);
         return mybatis.deleteBoard(num)>0?"success":"false";
     }
 
     @ResponseBody
-    @PostMapping("/insert/{writer}/{title}/{content}")
+    @PostMapping("/board/{writer}/{title}/{content}")
     public String insertBoard(BoardVO bvo){
         log.info("글작성");
         return mybatis.insertBoard(bvo)>0?"success":"false";
     }
 
     @ResponseBody
-    @PostMapping("/update/{board_number}/{title}/{content}")
+    @PutMapping("/board/{board_number}/{title}/{content}")
     public String updateBoard(BoardVO bvo){
         log.info("글 수정 : {}", bvo.getBoard_number());
         return mybatis.updateBoard(bvo)>0?"success":"false";

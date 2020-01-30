@@ -1,0 +1,28 @@
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+---
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+  tomcat:
+    uri-encoding: UTF-8
+  port : 8080
+---
+spring:
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+---
+spring:
+  main:
+    allow-bean-definition-overriding: true
+---
+spring:
+  aop:
+    auto: true
+---

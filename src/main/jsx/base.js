@@ -4,28 +4,28 @@ const BASE_URL = 'http://localhost:8080';
 
 class base {
     listBoard() {
-        return axios.get(BASE_URL +'/list');
+        return axios.get(BASE_URL +'/board');
     }
 
     detailBoard(board_number){
-        return axios.get(BASE_URL + '/select/' + board_number);
+        return axios.get(BASE_URL + '/board/' + board_number);
     }
 
     deleteBoard(board_number){
-        return axios.get(BASE_URL + '/delete/' + board_number);
+        return axios.delete(BASE_URL + '/board/' + board_number);
     }
 
     insertBoard(){
         const writer = document.getElementById('writer').value;
         const title = document.getElementById('title').value;
         const content = document.getElementById('content').value;
-        return axios.post(BASE_URL + '/insert/'+writer+'/'+title+'/'+content);
+        return axios.post(BASE_URL + '/board/'+writer+'/'+title+'/'+content);
     }
 
     updateBoard(board_number){
         const title = document.getElementById('title').value;
         const content = document.getElementById('content').value;
-        return axios.post(BASE_URL + '/update/'+board_number+'/'+title+'/'+content);
+        return axios.put(BASE_URL + '/board/'+board_number+'/'+title+'/'+content);
     }
 }
 

@@ -4,7 +4,7 @@ import base from "./base";
 
 class List extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             board: [],
             detailBoard: [],
@@ -17,6 +17,7 @@ class List extends React.Component {
     }
 
     reloadList = () => {
+        console.log('이건됨?');
         this.clearValue();
         base.listBoard().then(res => {
             this.setState({board: res.data});
