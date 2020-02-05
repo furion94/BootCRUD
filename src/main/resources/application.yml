@@ -24,5 +24,5 @@ spring:
 ---
 spring:
   aop:
-    auto: true
+    auto: false
 ---

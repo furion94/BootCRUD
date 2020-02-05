@@ -5,7 +5,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-//@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy
 @SpringBootApplication
 @ServletComponentScan
 public class BootreactApplication {
